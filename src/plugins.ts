@@ -88,12 +88,9 @@ export async function main(channel: string | TextBasedChannel, interaction: Comm
 		console.error("Channel not found");
 		return;
 	}
-	if (newPluginsArray.length === 0) {
+	if (newPluginsArray.length === 0 && interaction) {
 		//send message to channel
-		if (interaction) {
-			await interaction.editReply("Aucun nouveau plugin trouvé");
-		}
-		else channelText.send("Aucun nouveau plugin trouvé");
+		await interaction.editReply("Aucun nouveau plugin trouvé");
 	}
 	const embeds = [];
 	//note : limits of the api for sending embed in a single message : 10
