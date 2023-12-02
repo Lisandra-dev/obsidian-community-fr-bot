@@ -8,7 +8,7 @@ import { getPlugin, main } from "./plugins";
 
 export const newPlugins = {
 	data: new SlashCommandBuilder()
-		.setName("Nouveaux modules")
+		.setName("nouveaux")
 		.setDescription("Envoie un message avec les nouveaux modules"),
 	async execute(interaction: CommandInteraction) {
 		if (!interaction.guildId) {
@@ -18,8 +18,9 @@ export const newPlugins = {
 		if (!channel) {
 			return;
 		}
-		await main(channel);
-
+		//defer
+		await interaction.deferReply();
+		await main(channel, interaction);
 	},
 
 };
@@ -38,7 +39,7 @@ export const getPlugins = {
 			return;
 		}
 		const options = interaction.options as CommandInteractionOptionResolver;
-		const pluginName = options.getString("module");
+		const pluginName = options.getString("module")?.toLowerCase();
 		if (!pluginName) {
 			return interaction.reply({content: "Le nom du module n'est pas valide", ephemeral: true});
 		}
@@ -46,6 +47,15 @@ export const getPlugins = {
 		if (!plugin) {
 			return interaction.reply({content: "Le module n'a pas été trouvé", ephemeral: true});
 		}
-		await interaction.reply({embeds: [plugin]});
+		if (Array.isArray(plugin)) {
+			//send each 10 to 10 embeds
+			for (let i = 0; i < plugin.length; i += 10) {
+				await interaction.reply({embeds: plugin.slice(i, i + 10)});
+			}
+		} else {
+			return interaction.reply({embeds: [plugin]});
+		}
 	}
 };
+
+export const commandsList = [newPlugins, getPlugins];

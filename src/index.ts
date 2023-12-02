@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import * as process from "process";
 
 import * as pkg from "../package.json";
+import interaction from "./interaction";
+import ready from "./ready";
 
 dotenv.config({ path: ".env" });
 
@@ -22,6 +24,15 @@ export const client = new Client({
 
 export const VERSION = pkg.version ?? "0.0.0";
 export const CHANNEL_ID = process.env.CHANNEL_ID ?? "0";
+export const prod = process.env.NODE_ENV === "production";
+
+try {
+	ready(client);
+	interaction(client);
+}
+catch (error) {
+	console.error(error);
+}
 
 
 client.login(process.env.DISCORD_TOKEN);
