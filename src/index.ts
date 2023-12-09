@@ -3,8 +3,9 @@ import dotenv from "dotenv";
 import * as process from "process";
 
 import * as pkg from "../package.json";
-import interaction from "./interaction";
+import {interactionEvent, joinEvent} from "./interaction";
 import ready from "./ready";
+
 
 dotenv.config({ path: ".env" });
 
@@ -28,7 +29,8 @@ export const prod = process.env.NODE_ENV === "production";
 
 try {
 	ready(client);
-	interaction(client);
+	interactionEvent(client);
+	joinEvent(client);
 }
 catch (error) {
 	console.error(error);
