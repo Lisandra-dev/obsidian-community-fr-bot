@@ -110,8 +110,9 @@ export async function main(channel: string | TextBasedChannel, interaction: Comm
 
 export async function getPlugin(plugin: string) {
 	const plugins = await fetchPluginsFromGitHub();
-	const pluginFound = plugins.filter((pluginFound) => pluginFound.id === plugin || pluginFound.name == plugin || pluginFound.repo.includes(plugin) || pluginFound.author === plugin);
-	if (!pluginFound) {
+	plugin = plugin.toLowerCase();
+	const pluginFound = plugins.filter((pluginFound) => pluginFound.id.toLowerCase() === plugin || pluginFound.name.toLowerCase() == plugin || pluginFound.repo.toLowerCase().includes(plugin) || pluginFound.author.toLowerCase() === plugin || pluginFound.description.toLowerCase().includes(plugin));
+	if (pluginFound.length === 0) {
 		return null;
 	}
 	if (pluginFound.length === 1) {

@@ -27,7 +27,7 @@ export const newPlugins = {
 
 export const getPlugins = {
 	data : new SlashCommandBuilder()
-		.setName("obtenir")
+		.setName("rechercher")
 		.setDescription("Permet d'obtenir les informations à propos d'un module")
 		.addStringOption(option => option.setName("module").setDescription("Nom du module").setRequired(true)), //je pourrais faire la liste des plugins, mais avec 1200 plugins, ça risque de faire beaucoup à afficher, autant faire une simple recherche
 	async execute(interaction: CommandInteraction) {
