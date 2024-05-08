@@ -1,3 +1,43 @@
 {
-	"GitHooks.hooksDirectory": "e:\\Documents\\Github\\obsidian-community-fr-bot\\.git\\hooks"
+	"i18n-ally.localesPaths": [
+		"E:/Documents/Github/obsidian-community-fr-bot/src/localizations/locales"
+	],
+	"files.exclude": {
+		"**/.git": false,
+		"**/.svn": false,
+		"**/.hg": false,
+		"**/CVS": false,
+		"**/.DS_Store": false,
+		"**/Thumbs.db": false,
+		".idea": false,
+		".vscode/**": false,
+		".vscode/settings.json": false,
+		"**/.idea": false,
+		"**/.vscode": false,
+		"**/dist": false,
+		"**/node_modules": false,
+		"dist": false,
+		"node_modules": false,
+		"settings.json": false
+	},
+	"explorerExclude.backup": {},
+	"i18n-ally.keysInUse": [
+		"error.invalidDice.totalExceededBy",
+		"error.invalidDice.tooMuchStats",
+		"error.invalidDice.tooMuchDice",
+		"error.invalidDice.statNotFound",
+		"error.invalidDice.notRegistered",
+		"error.invalidDice.noThread",
+		"error.invalidDice.noTemplate",
+		"error.invalidDice.user",
+		"error.invalidDice.userNotRegistered",
+		"error.invalidDice.noStats",
+		"error.invalidDice.noMessage",
+		"error.invalidDice.noEmbed",
+		"error.invalidDice.noDice",
+		"error.invalidDice.noDamage",
+		"error.invalidDice.mustBeLower",
+		"error.invalidDice.mustBeGreater"
+	],
+	"jest.enable": false
 }

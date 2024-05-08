@@ -1,0 +1,12 @@
+{
+  "new": "new",
+  "newDesc": "Send a message with the new plugins",
+  "noNew": "No new plugins found",
+  "notFound": "The plugin was not found",
+  "search": {
+    "desc": "Allows you to obtain information about a plugin",
+    "moduleDesc": "Plugin name",
+    "name": "plugin",
+    "title": ""
+  }
+}

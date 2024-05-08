@@ -1,19 +1,25 @@
 import { CronJob } from "cron";
-import { Channel, CommandInteraction, EmbedBuilder, TextBasedChannel } from "discord.js";
+import { Channel, CommandInteraction, EmbedBuilder, Guild, Locale, TextBasedChannel } from "discord.js";
 import * as fs from "fs";
 
-import { CHANNEL_ID, client, prod } from "./index";
+import { client, prod } from "./index";
 import { DEFAULT_PLUGIN, ObsidianPlugin } from "./interface";
+import { ln } from "./localizations";
 
 async function fetchPluginsFromGitHub() {
 	const url = "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins.json";
-	const response = await fetch(url);
-	const data = await response.json();
-	if (!prod) {
-		//add a fake plugin
-		data.push(DEFAULT_PLUGIN);
+	try {
+		const response = await fetch(url);
+		const data = await response.json();
+		if (!prod) {
+			//add a fake plugin
+			data.push(DEFAULT_PLUGIN);
+		}
+		return data as ObsidianPlugin[];
+	} catch (error) {
+		console.error(error);
+		return [];
 	}
-	return data as ObsidianPlugin[];
 }
 
 async function createPluginList(newPlugins: ObsidianPlugin[] = []) {
@@ -73,6 +79,10 @@ function createDiscordEmbed(newPlugin: ObsidianPlugin) {
 export async function main(channel: string | TextBasedChannel, interaction: CommandInteraction | null = null) {
 	const oldPlugins = await getOldPlugins();
 	const newPlugins = await fetchPluginsFromGitHub();
+	const ul = ln(interaction?.locale || "en" as Locale);
+	if (newPlugins.length === oldPlugins.length) {
+		await interaction?.editReply(ul("noNew"));
+	}
 	const newPluginsArray = await findNewPlugins(oldPlugins, newPlugins);
 	let channelText: TextBasedChannel | null | Channel = null;
 	if (typeof channel === "string") {
@@ -90,7 +100,7 @@ export async function main(channel: string | TextBasedChannel, interaction: Comm
 	}
 	if (newPluginsArray.length === 0 && interaction) {
 		//send message to channel
-		await interaction.editReply("Aucun nouveau plugin trouvé");
+		await interaction.editReply(ul("noNew"));
 	}
 	const embeds = [];
 	//note : limits of the api for sending embed in a single message : 10
@@ -157,8 +167,12 @@ export async function getPlugin(plugin: string) {
 	return embeds;
 }
 
-export async function autoNews() {
-	const channelID = CHANNEL_ID;
+export async function autoNews(guild?: Guild
+) {
+	if (!guild) return;
+	const data = fs.readFileSync("data.json", "utf-8");
+	const jsonData = JSON.parse(data);
+	const channelID = jsonData[guild.id];
 	if (!channelID || channelID.trim().length===0) {
 		return;
 	}

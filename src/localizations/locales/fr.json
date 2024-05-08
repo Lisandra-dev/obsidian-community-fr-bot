@@ -1,0 +1,12 @@
+{
+  "new": "nouveaux",
+  "newDesc": "Envoie un message avec les nouveaux modules",
+  "noNew": "Aucun nouveau plugin trouvé",
+  "notFound": "Le module n'a pas été trouvé",
+  "search": {
+    "desc": "Permet d'obtenir les informations à propos d'un module",
+    "moduleDesc": "Nom du module",
+    "name": "module",
+    "title": "rechercher"
+  }
+}

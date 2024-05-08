@@ -1,15 +1,22 @@
 import {
 	CommandInteraction,
 	CommandInteractionOptionResolver,
+	Locale,
 	SlashCommandBuilder
 } from "discord.js";
+import i18next from "i18next";
 
+import { cmdLn, ln } from "./localizations";
 import { getPlugin, main } from "./plugins";
+
+const t = i18next.getFixedT("fr");
 
 export const newPlugins = {
 	data: new SlashCommandBuilder()
-		.setName("nouveaux")
-		.setDescription("Envoie un message avec les nouveaux modules"),
+		.setName(t("new"))
+		.setNameLocalizations(cmdLn("new"))
+		.setDescription(t("newDesc"))
+		.setDescriptionLocalizations(cmdLn("newDesc")),
 	async execute(interaction: CommandInteraction) {
 		if (!interaction.guildId) {
 			return;
@@ -27,9 +34,14 @@ export const newPlugins = {
 
 export const getPlugins = {
 	data : new SlashCommandBuilder()
-		.setName("rechercher")
-		.setDescription("Permet d'obtenir les informations à propos d'un module")
-		.addStringOption(option => option.setName("module").setDescription("Nom du module").setRequired(true)), //je pourrais faire la liste des plugins, mais avec 1200 plugins, ça risque de faire beaucoup à afficher, autant faire une simple recherche
+		.setName(t("search.title"))
+		.setNameLocalizations(cmdLn("search.title"))
+		.setDescription(t("search.desc"))
+		.setDescriptionLocalizations(cmdLn("search.desc"))
+		.addStringOption(option => option
+			.setName(t("search.name"))
+			.setDescription(t("search.moduleDesc"))
+			.setRequired(true)), 
 	async execute(interaction: CommandInteraction) {
 		if (!interaction.guildId) {
 			return;
@@ -38,14 +50,15 @@ export const getPlugins = {
 		if (!channel) {
 			return;
 		}
+		const ul = ln(interaction.locale as Locale);
 		const options = interaction.options as CommandInteractionOptionResolver;
-		const pluginName = options.getString("module")?.toLowerCase();
+		const pluginName = options.getString(t("search.name"))?.toLowerCase();
 		if (!pluginName) {
 			return interaction.reply({content: "Le nom du module n'est pas valide", ephemeral: true});
 		}
 		const plugin = await getPlugin(pluginName);
 		if (!plugin) {
-			return interaction.reply({content: "Le module n'a pas été trouvé", ephemeral: true});
+			return interaction.reply({content: ul("notFound"), ephemeral: true});
 		}
 		if (Array.isArray(plugin)) {
 			//send each 10 to 10 embeds

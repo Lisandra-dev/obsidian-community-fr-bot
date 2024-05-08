@@ -27,8 +27,8 @@ export default (client: Client): void => {
 				Routes.applicationGuildCommands(process.env.CLIENT_ID, guild.id),
 				{ body: serializedCommands },
 			);
+			await autoNews(guild);
 		}
-		await autoNews();
 
 	});
 };

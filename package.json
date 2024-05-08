@@ -7,6 +7,7 @@
   "scripts": {
     "init": "pnpm i && node install.js",
     "build": "tsc",
+    "test": "tsc --noEmit --skipLibCheck",
     "prestart": "pnpm run build",
     "start": "pm2 start dist/src/index.js --name obsidian-bot --log-date-format=\"YYYY-MM-DD HH:mm Z\"",
     "stop": "pm2 stop obsidian-bot",
@@ -33,6 +34,7 @@
     "discord.js": "^14.14.1",
     "dotenv": "^16.3.1",
     "eslint": "^8.55.0",
+    "i18next": "^23.10.1",
     "nodemon": "^3.0.2",
     "octokit": "^3.1.2",
     "ts-dedent": "^2.2.0",
