@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Bot for the Obsidian Community FR Discord server",
   "main": "dist/index.js",
-  "repository": "github:lisandra-dev/obsidian-community-fr-bot",
+  "repository": "github:mara-li/obsidian-community-fr-bot",
   "scripts": {
     "init": "pnpm i && node install.js",
     "build": "tsc",
