@@ -19,7 +19,7 @@
     "lint:fix": "eslint --fix --ext .ts src/"
   },
   "keywords": [],
-  "author": "lisandra-dev",
+  "author": "mara-li",
   "license": "GNU GPLv3",
   "dependencies": {
     "@discordjs/rest": "^2.2.0",
